@@ -6,6 +6,7 @@ import EngagementTrendChart from '../charts/EngagementTrendChart';
 import FollowerGrowthChart from '../charts/FollowerGrowthChart';
 import MetricsCard from '../charts/MetricsCard';
 import CommentQueuePanel from '../engagement/CommentQueuePanel';
+import RecommendedTargetsPanel from '../engagement/RecommendedTargetsPanel';
 import TargetProfilesList from '../engagement/TargetProfilesList';
 import InsightsPanel from '../insights/InsightsPanel';
 import PostPerformanceTable from '../tables/PostPerformanceTable';
@@ -196,7 +197,10 @@ export default function Dashboard() {
               {tab === 'engagement' && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <CommentQueuePanel />
-                  <TargetProfilesList />
+                  <div className="space-y-6">
+                    <RecommendedTargetsPanel />
+                    <TargetProfilesList />
+                  </div>
                 </div>
               )}
             </section>
