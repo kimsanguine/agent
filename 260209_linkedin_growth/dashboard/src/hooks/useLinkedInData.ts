@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { LINKEDIN_USER_ID } from '../config/linkedin';
 import type {
   CommentDraft,
   Insights,
@@ -14,7 +15,6 @@ import type {
   Trends,
 } from '../types';
 
-const USER_ID = 'mock-user';
 const API_BASE = '/api';
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -28,7 +28,7 @@ export function useSummary() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchJson<Summary>(`${API_BASE}/analytics/${USER_ID}/summary`)
+    fetchJson<Summary>(`${API_BASE}/analytics/${LINKEDIN_USER_ID}/summary`)
       .then(setData)
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -42,7 +42,7 @@ export function usePosts(sort = 'impressions', order = 'desc') {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchJson<{ posts: Post[] }>(`${API_BASE}/analytics/${USER_ID}/posts?sort=${sort}&order=${order}`)
+    fetchJson<{ posts: Post[] }>(`${API_BASE}/analytics/${LINKEDIN_USER_ID}/posts?sort=${sort}&order=${order}`)
       .then(res => setData(res.posts))
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -56,7 +56,7 @@ export function useTrends(days = 30) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchJson<Trends>(`${API_BASE}/analytics/${USER_ID}/trends?days=${days}`)
+    fetchJson<Trends>(`${API_BASE}/analytics/${LINKEDIN_USER_ID}/trends?days=${days}`)
       .then(setData)
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -70,7 +70,7 @@ export function useRecommendations() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchJson<Recommendations>(`${API_BASE}/recommendations/${USER_ID}`)
+    fetchJson<Recommendations>(`${API_BASE}/recommendations/${LINKEDIN_USER_ID}`)
       .then(setData)
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -139,7 +139,7 @@ export function useInsights(days = 30) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchJson<Insights>(`${API_BASE}/analytics/${USER_ID}/insights?days=${days}`)
+    fetchJson<Insights>(`${API_BASE}/analytics/${LINKEDIN_USER_ID}/insights?days=${days}`)
       .then(setData)
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -197,7 +197,7 @@ export function useTargetRecommendations(options: UseTargetRecommendationsOption
     const res = await fetch(`${API_BASE}/targets/recommendations/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: USER_ID, ...payload }),
+      body: JSON.stringify({ user_id: LINKEDIN_USER_ID, ...payload }),
     });
     if (!res.ok) throw new Error(`API error: ${res.status}`);
     const body = await res.json() as TargetRecommendationsRefreshResponse;
@@ -209,7 +209,7 @@ export function useTargetRecommendations(options: UseTargetRecommendationsOption
     const res = await fetch(`${API_BASE}/targets/recommendations/${candidateId}/action`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: USER_ID, ...payload }),
+      body: JSON.stringify({ user_id: LINKEDIN_USER_ID, ...payload }),
     });
     if (!res.ok) throw new Error(`API error: ${res.status}`);
     const body = await res.json() as TargetRecommendationActionResponse;

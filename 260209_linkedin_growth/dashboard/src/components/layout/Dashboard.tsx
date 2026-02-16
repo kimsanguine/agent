@@ -1,6 +1,7 @@
 import { BarChart3, Eye, Target, TrendingUp, Users } from 'lucide-react';
 import type { KeyboardEvent } from 'react';
 import { useId, useRef, useState } from 'react';
+import { LINKEDIN_PROFILE_URL } from '../../config/linkedin';
 import { useInsights, usePosts, useSummary, useTrends } from '../../hooks/useLinkedInData';
 import EngagementTrendChart from '../charts/EngagementTrendChart';
 import FollowerGrowthChart from '../charts/FollowerGrowthChart';
@@ -81,6 +82,15 @@ export default function Dashboard() {
                 <h1 className="text-xl font-bold text-white">LinkedIn Growth</h1>
                 <p className="text-xs text-slate-400">
                   {summary ? `${summary.total_posts}개 포스트 추적 중` : '로딩 중...'}
+                  {' · '}
+                  <a
+                    href={LINKEDIN_PROFILE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-300 hover:text-blue-200 transition-colors"
+                  >
+                    프로필 열기
+                  </a>
                   {' · '}
                   <span className="text-amber-400">Mock 모드</span>
                 </p>
