@@ -116,7 +116,9 @@
 ### 3.1 GET /api/targets/recommendations
 
 #### Query Params
-- `user_id` (string, optional, default: `mock-user`)
+- `user_id` (string, optional, default: `config.LINKEDIN_USER_ID`)
+  - 권장값: `urn:li:person:...`
+  - 대시보드 env의 핸들(`sanguinekim`)도 허용되며, 백엔드에서 설정된 URN으로 보정 가능
 - `limit` (number, optional, default: `10`, max: `50`)
 - `min_score` (number, optional, default: `0`)
 - `distance` (number, optional; `1 | 2 | 3`)
@@ -201,6 +203,11 @@
 - `500`: recommendation engine failure
 
 ---
+
+### 실데이터 모드 주의사항
+
+- `USE_MOCK_DATA=false`에서 추천/분석은 LinkedIn 실수집 결과를 우선 사용합니다.
+- 토큰이 없거나 API 실패 시에는 최근 스냅샷(`storage/analytics_store.py`)을 fallback으로 사용합니다.
 
 ### 3.2 POST /api/targets/recommendations/refresh
 

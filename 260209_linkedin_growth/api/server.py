@@ -1,6 +1,8 @@
 """Flask REST API 서버 (port 5000)."""
 
 import sys
+from collections import defaultdict
+from datetime import datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -39,6 +41,56 @@ app = Flask(__name__)
 CORS(app)
 
 
+def _estimate_profile_views_from_impressions(impressions: int) -> int:
+    if impressions <= 0:
+        return 0
+    return max(1, int(impressions * 0.04))
+
+
+def _normalize_compact_date(value: str) -> str:
+    if len(value) == 8 and value.isdigit():
+        return f"{value[:4]}-{value[4:6]}-{value[6:]}"
+    return value[:10]
+
+
+def _load_profile_views(user_id: str, posts: list[dict], days: int = 90) -> list[dict]:
+    if config.USE_MOCK_DATA:
+        return MockData.generate_profile_views()[-days:]
+
+    views_by_day: dict[str, int] = defaultdict(int)
+
+    store = AnalyticsStore(user_id)
+    snapshots = store.load_range(days=days)
+    for snapshot in snapshots:
+        date_key = _normalize_compact_date(snapshot.get("date", ""))
+        if not date_key:
+            continue
+
+        snap_posts = snapshot.get("posts", [])
+        impressions = sum(int(post.get("impressions", 0)) for post in snap_posts)
+        views_by_day[date_key] = max(
+            views_by_day[date_key],
+            _estimate_profile_views_from_impressions(impressions),
+        )
+
+    if not views_by_day:
+        for post in posts:
+            date_key = post.get("created_at", "")[:10]
+            if not date_key:
+                continue
+            impressions = int(post.get("impressions", 0))
+            views_by_day[date_key] += _estimate_profile_views_from_impressions(impressions)
+
+    today = datetime.now().date()
+    result = []
+    for i in range(days):
+        day = today - timedelta(days=days - 1 - i)
+        key = day.isoformat()
+        result.append({"date": key, "views": int(views_by_day.get(key, 0))})
+
+    return result
+
+
 # ── Analytics ──
 
 
@@ -47,7 +99,7 @@ def get_summary(user_id: str):
     """7/30/90일 요약."""
     posts = collect_posts(user_id)
     followers = collect_followers(user_id)
-    profile_views = MockData.generate_profile_views()
+    profile_views = _load_profile_views(user_id, posts, days=90)
 
     period_stats = calculate_period_stats(posts, followers, profile_views)
     weekly_stats = calculate_weekly_stats(posts, followers)
@@ -87,7 +139,7 @@ def get_trends(user_id: str):
 
     posts = collect_posts(user_id)
     followers = collect_followers(user_id)
-    profile_views = MockData.generate_profile_views()
+    profile_views = _load_profile_views(user_id, posts, days=max(days, 90))
 
     # 일별 데이터
     follower_history = followers.get("history", [])[-days:]
