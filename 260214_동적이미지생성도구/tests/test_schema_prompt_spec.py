@@ -4,7 +4,12 @@ from src.schema import InputChannel, PromptSpec
 
 
 def test_prompt_spec_and_input_channel_contracts():
-    assert InputChannel.PROMPT.value == "prompt"
+    assert [channel.value for channel in InputChannel] == [
+        "prompt",
+        "prompt-file",
+        "graph-json",
+        "miro-board",
+    ]
 
     assert [field.name for field in fields(PromptSpec)] == [
         "title",
