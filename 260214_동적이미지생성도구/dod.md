@@ -3,10 +3,10 @@
 - 기준 문서: `prd.md`
 - 프로젝트: `260214_동적이미지생성도구`
 - 마지막 기술 검증: 2026-02-18
-  - Python test suite: 25 passed
+  - Python test suite: 32 passed
   - Renderer Vitest: 2 passed
   - Renderer build(`tsc --noEmit`): pass
-  - 상세: `docs/plans/2026-02-17-stage1-verification-notes.md`
+  - 상세: `docs/plans/2026-02-18-stage2-verification-notes.md`
 
 ---
 
@@ -20,11 +20,12 @@
   - 회귀/계약 검증: `tests/test_input_loader.py`, `tests/test_cli_input_channels.py`, `tests/test_prompt_parser.py`, `tests/test_prompt_to_graph.py`
 
 ### DoD-2 Draft 3개 생성 + 선택 후 Final 렌더
-- 상태: 미완료
+- 상태: 완료
 - 현재 근거:
-  - Final 렌더 엔진(단일 흐름): `renderer/render.mjs`, `src/remotion_bridge.py`
-- 갭:
-  - 3-way draft 생성, 선택 로직 미구현
+  - 3-way draft 생성기: `src/draft_generator.py`
+  - draft 선택 후 final 렌더 플로우: `src/cli.py` (`run_stage2`)
+  - Stage 2 회귀/계약 검증: `tests/test_draft_generator.py`, `tests/test_cli_stage2_flow.py`
+  - 최신 검증 노트: `docs/plans/2026-02-18-stage2-verification-notes.md`
 
 ### DoD-3 출력 포맷 MP4/WebM/GIF 제공
 - 상태: 미완료
@@ -72,13 +73,18 @@
   - Renderer build(`tsc --noEmit`): pass
   - 검증 노트: `docs/plans/2026-02-17-stage1-verification-notes.md`
 
-### Stage 2 — Draft 3-Way Generation & Selection
+### Stage 2 — Draft 3-Way Generation & Selection (완료)
 - 범위:
   - 요청 1건당 draft 3개 생성
   - draft 선택 후 final 렌더 실행
 - 종료 조건:
   - draft 3개 생성/목록화/선택 플로우 동작
   - 선택된 draft 기준 final 렌더 성공
+- 완료 근거:
+  - Stage 2 구현 파일: `src/draft_generator.py`, `src/cli.py`
+  - Stage 2 테스트: `tests/test_draft_generator.py`, `tests/test_cli_stage2_flow.py`
+  - 최신 검증 결과: Python 32 passed / Vitest 2 passed / renderer build pass
+  - 검증 노트: `docs/plans/2026-02-18-stage2-verification-notes.md`
 
 ### Stage 3 — Output Format Expansion
 - 범위:
