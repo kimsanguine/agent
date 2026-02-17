@@ -1,3 +1,5 @@
+import re
+
 from src.schema import PromptSpec
 
 
@@ -5,6 +7,7 @@ _DEFAULT_TITLE = "인포그래픽"
 _DEFAULT_STEPS = ["문제 정의", "처리", "결과"]
 _DEFAULT_EMPHASIS = ["핵심 메시지"]
 _DEFAULT_TONE = "professional"
+_LABEL_PATTERN = re.compile(r"^(목표|단계|강조|톤)\s*:\s*(.*)$")
 
 
 def parse_prompt(text: str) -> PromptSpec:
@@ -15,29 +18,29 @@ def parse_prompt(text: str) -> PromptSpec:
 
     for raw_line in text.splitlines():
         line = raw_line.strip()
+        match = _LABEL_PATTERN.match(line)
 
-        if line.startswith("목표:"):
-            value = line.split(":", 1)[1].strip()
-            if value:
-                title = value
+        if not match:
             continue
 
-        if line.startswith("단계:"):
-            value = line.split(":", 1)[1].strip()
+        label, value = match.groups()
+        value = value.strip()
+
+        if label == "목표" and value:
+            title = value
+            continue
+
+        if label == "단계":
             parsed_steps = [step.strip() for step in value.split("->") if step.strip()]
             steps = parsed_steps[:7]
             continue
 
-        if line.startswith("강조:"):
-            value = line.split(":", 1)[1].strip()
-            if value:
-                emphasis_item = value
+        if label == "강조" and value:
+            emphasis_item = value
             continue
 
-        if line.startswith("톤:"):
-            value = line.split(":", 1)[1].strip()
-            if value:
-                tone = value
+        if label == "톤" and value:
+            tone = value
 
     if len(steps) < 3:
         steps = _DEFAULT_STEPS.copy()
