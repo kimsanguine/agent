@@ -1,5 +1,6 @@
 import { RefreshCw, Sparkles } from 'lucide-react';
 import { useState } from 'react';
+import { LINKEDIN_USER_ID } from '../../config/linkedin';
 import { useTargetRecommendations } from '../../hooks/useLinkedInData';
 import type { RecommendationMutationAction, TargetRecommendationCandidate } from '../../types';
 
@@ -33,6 +34,7 @@ const ACTION_STYLE: Record<TargetRecommendationCandidate['recommended_action'], 
 
 export default function RecommendedTargetsPanel() {
   const { data, loading, refresh, applyAction } = useTargetRecommendations({
+    userId: LINKEDIN_USER_ID,
     limit: 5,
     minScore: 50,
     state: 'active',

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { LINKEDIN_USER_ID } from '../config/linkedin';
 import type {
   CommentDraft,
+  HealthStatus,
   Insights,
   Post,
   QueueStats,
@@ -35,6 +36,18 @@ export function useSummary() {
   }, []);
 
   return { data, loading };
+}
+
+export function useHealthStatus() {
+  const [data, setData] = useState<HealthStatus | null>(null);
+
+  useEffect(() => {
+    fetchJson<HealthStatus>(`${API_BASE}/health`)
+      .then(setData)
+      .catch(console.error);
+  }, []);
+
+  return data;
 }
 
 export function usePosts(sort = 'impressions', order = 'desc') {
@@ -149,6 +162,7 @@ export function useInsights(days = 30) {
 }
 
 interface UseTargetRecommendationsOptions {
+  userId?: string;
   limit?: number;
   minScore?: number;
   distance?: 1 | 2 | 3;
@@ -159,6 +173,8 @@ interface UseTargetRecommendationsOptions {
 
 function buildRecommendationQuery(options: UseTargetRecommendationsOptions = {}) {
   const params = new URLSearchParams();
+
+  if (options.userId) params.set('user_id', options.userId);
 
   if (options.limit != null) params.set('limit', String(options.limit));
   if (options.minScore != null) params.set('min_score', String(options.minScore));
@@ -176,6 +192,7 @@ export function useTargetRecommendations(options: UseTargetRecommendationsOption
   const [loading, setLoading] = useState(true);
 
   const query = buildRecommendationQuery(options);
+  const requestUserId = options.userId || LINKEDIN_USER_ID;
 
   const fetchRecommendations = async () => {
     setLoading(true);
@@ -197,7 +214,7 @@ export function useTargetRecommendations(options: UseTargetRecommendationsOption
     const res = await fetch(`${API_BASE}/targets/recommendations/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: LINKEDIN_USER_ID, ...payload }),
+      body: JSON.stringify({ user_id: requestUserId, ...payload }),
     });
     if (!res.ok) throw new Error(`API error: ${res.status}`);
     const body = await res.json() as TargetRecommendationsRefreshResponse;
@@ -209,7 +226,7 @@ export function useTargetRecommendations(options: UseTargetRecommendationsOption
     const res = await fetch(`${API_BASE}/targets/recommendations/${candidateId}/action`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: LINKEDIN_USER_ID, ...payload }),
+      body: JSON.stringify({ user_id: requestUserId, ...payload }),
     });
     if (!res.ok) throw new Error(`API error: ${res.status}`);
     const body = await res.json() as TargetRecommendationActionResponse;

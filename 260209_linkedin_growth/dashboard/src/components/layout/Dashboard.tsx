@@ -2,7 +2,7 @@ import { BarChart3, Eye, Target, TrendingUp, Users } from 'lucide-react';
 import type { KeyboardEvent } from 'react';
 import { useId, useRef, useState } from 'react';
 import { LINKEDIN_PROFILE_URL } from '../../config/linkedin';
-import { useInsights, usePosts, useSummary, useTrends } from '../../hooks/useLinkedInData';
+import { useHealthStatus, useInsights, usePosts, useSummary, useTrends } from '../../hooks/useLinkedInData';
 import EngagementTrendChart from '../charts/EngagementTrendChart';
 import FollowerGrowthChart from '../charts/FollowerGrowthChart';
 import MetricsCard from '../charts/MetricsCard';
@@ -26,10 +26,13 @@ export default function Dashboard() {
   const { data: posts, loading: postsLoading } = usePosts();
   const { data: trends, loading: trendsLoading } = useTrends(90);
   const { data: insights } = useInsights(30);
+  const healthStatus = useHealthStatus();
   const tabListId = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const loading = summaryLoading || postsLoading || trendsLoading;
+  const modeLabel = healthStatus == null ? '모드 확인 중' : healthStatus.mock_mode ? 'Mock 모드' : '실데이터 모드';
+  const modeClass = healthStatus == null ? 'text-slate-400' : healthStatus.mock_mode ? 'text-amber-400' : 'text-emerald-400';
 
   const getTabId = (key: Tab) => `${tabListId}-tab-${key}`;
   const getPanelId = (key: Tab) => `${tabListId}-panel-${key}`;
@@ -92,7 +95,7 @@ export default function Dashboard() {
                     프로필 열기
                   </a>
                   {' · '}
-                  <span className="text-amber-400">Mock 모드</span>
+                  <span className={modeClass}>{modeLabel}</span>
                 </p>
               </div>
             </div>

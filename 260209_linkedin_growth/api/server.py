@@ -324,7 +324,11 @@ def posted(comment_id: str):
 
 @app.route("/api/health")
 def health():
-    return jsonify({"status": "ok", "mock_mode": config.USE_MOCK_DATA})
+    return jsonify({
+        "status": "ok",
+        "mock_mode": config.USE_MOCK_DATA,
+        "user_id": config.LINKEDIN_USER_ID,
+    })
 
 
 if __name__ == "__main__":

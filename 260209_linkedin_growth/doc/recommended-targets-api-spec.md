@@ -126,6 +126,8 @@
 - `state` (string, optional; `active | hidden | snoozed | converted`)
 - `refresh` (boolean, optional, default: `false`)
 
+> 프론트 구현 메모: `dashboard/src/hooks/useLinkedInData.ts`에서 `user_id`를 쿼리로 전달하도록 사용 권장 (`useTargetRecommendations({ userId: ... })`).
+
 #### 200 Response
 
 ```json

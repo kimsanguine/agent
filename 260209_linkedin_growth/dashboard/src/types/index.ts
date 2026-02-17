@@ -138,6 +138,12 @@ export interface Insights {
   data_quality: 'excellent' | 'good' | 'fair' | 'poor';
 }
 
+export interface HealthStatus {
+  status: string;
+  mock_mode: boolean;
+  user_id?: string;
+}
+
 export type ProfileDnaType = 'builder' | 'insight' | 'connector' | 'storyteller';
 
 export interface ProfileDnaScores {
