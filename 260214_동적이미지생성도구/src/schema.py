@@ -10,9 +10,9 @@ class InputChannel(str, Enum):
     MIRO_BOARD = "miro-board"
 
 
-@dataclass
+@dataclass(frozen=True)
 class PromptSpec:
     title: str
     steps: list[str]
-    emphasis: str
+    emphasis: list[str]
     tone: str
