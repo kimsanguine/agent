@@ -73,6 +73,7 @@ def test_load_input_graph_prompt_file_reads_and_returns_graph_contract(tmp_path:
     [
         (None, "b1"),
         (object(), None),
+        (object(), ""),
     ],
 )
 def test_load_input_graph_miro_board_requires_client_and_board_id(client, board_id):
@@ -115,3 +116,31 @@ def test_load_input_graph_miro_board_fetches_items_then_normalizes(monkeypatch):
     assert client.called_with == ["board-123"]
     assert captured["items"] == items
     assert graph == {"nodes": [{"id": "normalized"}], "edges": [], "timeline": []}
+
+
+def test_load_input_graph_graph_json_rejects_malformed_shape(tmp_path: Path):
+    malformed = {
+        "nodes": [],
+        "edges": {},
+        "timeline": [],
+    }
+    graph_path = tmp_path / "bad_graph.json"
+    graph_path.write_text(json.dumps(malformed, ensure_ascii=False), encoding="utf-8")
+
+    with pytest.raises(ValueError):
+        input_loader.load_input_graph(
+            channel=InputChannel.GRAPH_JSON,
+            value=str(graph_path),
+            client=None,
+            board_id=None,
+        )
+
+
+def test_load_input_graph_unsupported_channel_raises_value_error():
+    with pytest.raises(ValueError):
+        input_loader.load_input_graph(
+            channel="unsupported-channel",
+            value="ignored",
+            client=None,
+            board_id=None,
+        )
