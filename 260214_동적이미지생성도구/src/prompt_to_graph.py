@@ -1,10 +1,10 @@
 from src.schema import PromptSpec
 
 
-def prompt_spec_to_graph(spec: PromptSpec) -> dict:
-    nodes = []
-    edges = []
-    timeline = []
+def prompt_spec_to_graph(spec: PromptSpec) -> dict[str, list[dict[str, object]]]:
+    nodes: list[dict[str, object]] = []
+    edges: list[dict[str, object]] = []
+    timeline: list[dict[str, object]] = []
 
     for idx, step in enumerate(spec.steps, start=1):
         node_id = f"n{idx}"
@@ -18,12 +18,12 @@ def prompt_spec_to_graph(spec: PromptSpec) -> dict:
             }
         )
 
-        start = (idx - 1) * 30
+        start_frame = (idx - 1) * 30
         timeline.append(
             {
                 "nodeId": node_id,
-                "start": start,
-                "end": start + 45,
+                "startFrame": start_frame,
+                "endFrame": start_frame + 45,
             }
         )
 
