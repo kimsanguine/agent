@@ -1,18 +1,21 @@
 # LinkedIn Growth Agent - Product Requirements Document
 
 > **프로젝트 시작일**: 2026-02-09
-> **현재 버전**: v1.0 (MVP)
-> **최종 수정일**: 2026-02-13
+> **현재 버전**: v1.1 (MVP+)
+> **최종 수정일**: 2026-02-17
 
 ---
 
 ## 📋 목차
 
 1. [프로젝트 개요](#1-프로젝트-개요)
-2. [현재 구현 기능 (v1.0)](#2-현재-구현-기능-v10)
+2. [현재 구현 기능 (v1.1)](#2-현재-구현-기능-v11)
 3. [사용자 니즈 분석](#3-사용자-니즈-분석)
 4. [향후 로드맵](#4-향후-로드맵)
 5. [기술 스택](#5-기술-스택)
+6. [Success Metrics (KPIs)](#6-success-metrics-kpis)
+7. [Risks & Mitigations](#7-risks--mitigations)
+8. [Appendix](#8-appendix)
 
 ---
 
@@ -44,7 +47,9 @@ LinkedIn 활동을 체계적으로 관리하고 성장시키기 위한 통합 �
 
 ---
 
-## 2. 현재 구현 기능 (v1.0)
+## 2. 현재 구현 기능 (v1.1)
+
+> 상태 기준: 2026-02-17 (P0 UI/UX 반영, 추천 타겟 패널/API 연동 완료, 실데이터 연동 준비)
 
 ### 2.1 대시보드 (3개 탭)
 
@@ -64,7 +69,7 @@ LinkedIn 활동을 체계적으로 관리하고 성장시키기 위한 통합 �
   - 컬럼: 포스트 내용, 노출, 참여율, 반응, 댓글, 날짜
   - 정렬 기능 (모든 컬럼 클릭 가능)
   - 필터 기능 (타입, 기간)
-  - 포스트 타입 아이콘 (🛠 build_log, 🎯 milestone 등)
+  - 포스트 타입 텍스트 배지 (예: `build_log`, `milestone`)
   - 참여율 색상 구분 (8%↑ 초록, 5-8% 파랑, 5%↓ 회색)
 
 #### **Tab 3: Engagement (참여)**
@@ -72,7 +77,7 @@ LinkedIn 활동을 체계적으로 관리하고 성장시키기 위한 통합 �
   - 상태별 필터 (대기/승인/게시/전체)
   - 통계 표시 (대기 5, 승인 3, 게시 12)
   - AI 댓글 아이템:
-    - 타겟 이름, 톤(💼전문적/😊친근/❓질문형)
+    - 타겟 이름, 톤(전문적/친근/질문형)
     - 품질 점수 (0-100)
     - 원문 미리보기
     - 액션 버튼 (승인/수정/거부)
@@ -85,6 +90,10 @@ LinkedIn 활동을 체계적으로 관리하고 성장시키기 위한 통합 �
     - 우선순위 (High/Medium/Low)
     - 참여 횟수, 최근 참여 날짜
     - 삭제 버튼
+- **추천 타겟 패널 (우측)**
+  - TRS 기반 추천 리스트 (Connect/Follow/Watch/Skip)
+  - 프로필 DNA/PI 배지 표시
+  - 액션: Connect, Follow, Add Target, Hide, Snooze, Skip
 
 ### 2.2 분석 화면
 
@@ -171,10 +180,12 @@ LinkedIn 활동을 체계적으로 관리하고 성장시키기 위한 통합 �
 - 기존 네트워크 활용도가 낮음
 - 팔로워 성장이 느리고 전략적이지 않음
 
-**현재 해결 수준:** ⚠️ **30% 해결**
+**현재 해결 수준:** ✅ **65% 해결**
 - 타겟 프로필 관리
 - 참여 횟수 추적
 - 우선순위 설정
+- TRS 기반 추천 타겟 패널(Connect/Follow/Watch/Skip)
+- 추천 액션 반영(Connect/Follow/Add Target/Hide/Snooze/Skip)
 
 **향후 개선:**
 - 🎯 **AI 타겟 발굴**: "당신의 포스트에 자주 반응하는 2촌 연결 추천"
@@ -241,8 +252,8 @@ LinkedIn 활동을 체계적으로 관리하고 성장시키기 위한 통합 �
 
 | 기능 | 우선순위 | 난이도 | 예상 시간 | 상태 |
 |------|---------|--------|----------|------|
-| **AI 콘텐츠 인사이트** | P0 | Low | 2-3일 | 🚀 개발 중 |
-| **네트워크 추천 기능** | P0 | Medium | 3-4일 | 📋 계획 중 |
+| **AI 콘텐츠 인사이트** | P0 | Low | 2-3일 | ✅ 구현 완료 |
+| **네트워크 추천 기능** | P0 | Medium | 3-4일 | ✅ 구현 완료 |
 
 #### 1.1 AI 콘텐츠 인사이트
 ```
@@ -399,8 +410,10 @@ LinkedIn → 웹사이트 → 전환 추적
 - **댓글 큐**: JSON 파일 (`engagement/comment_queue.py`)
 
 ### 5.5 External APIs
-- **LinkedIn API**: OAuth 2.0 (승인 대기 중)
+- **LinkedIn API**: OAuth 2.0 연동 (실데이터 모드 전환 지원)
 - **Mock Mode**: `mock/mock_data.py` (개발/테스트용)
+- **OAuth/Auth**: `auth/oauth.py`, `auth/token_manager.py` (LinkedIn 토큰 교환/암호화 저장)
+- **수집 실패 fallback**: `storage/analytics_store.py` 기반 스냅샷 fallback (토큰/API 실패 시)
 
 ### 5.6 Development Tools
 - **Linting**: ESLint 9.39 (Frontend)
@@ -452,6 +465,8 @@ LinkedIn → 웹사이트 → 전환 추적
 - **API 문서**:
   - [추천 타겟 API 스펙](recommended-targets-api-spec.md)
 - **사용자 가이드**: (추후 작성 예정)
+- **제품 문서**:
+  - [README](../README.md)
 
 ### 8.2 참고 링크
 - [LinkedIn API Documentation](https://learn.microsoft.com/en-us/linkedin/)
