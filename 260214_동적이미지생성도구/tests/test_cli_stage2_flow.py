@@ -93,6 +93,8 @@ def test_run_stage2_generates_three_drafts_and_renders_selected_default(
         graph_path=graph_path,
         output_video=out_dir / "out.mp4",
         output_still=out_dir / "thumb.png",
+        output_webm=out_dir / "out.webm",
+        output_gif=out_dir / "out.gif",
     )
     assert client.embed_calls == [("uXjVStage2", "https://cdn.example.com/out.mp4")]
 
@@ -140,6 +142,8 @@ def test_run_stage2_explicit_draft_selection_picks_correct_draft(
         graph_path=graph_path,
         output_video=out_dir / "out.mp4",
         output_still=out_dir / "thumb.png",
+        output_webm=out_dir / "out.webm",
+        output_gif=out_dir / "out.gif",
     )
 
 
@@ -185,5 +189,7 @@ def test_run_poc_backward_compatibility_unchanged(
         graph_path=out_dir / "graph.json",
         output_video=out_dir / "out.mp4",
         output_still=out_dir / "thumb.png",
+        output_webm=out_dir / "out.webm",
+        output_gif=out_dir / "out.gif",
     )
     assert client.embed_calls == [("uXjVLegacy", "https://cdn.example.com/out.mp4")]

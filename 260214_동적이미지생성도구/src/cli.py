@@ -43,6 +43,8 @@ def run_poc(
         graph_path=graph_path,
         output_video=out_dir / "out.mp4",
         output_still=out_dir / "thumb.png",
+        output_webm=out_dir / "out.webm",
+        output_gif=out_dir / "out.gif",
     )
 
     client.create_embed(board_id, render_url)
@@ -99,6 +101,8 @@ def run_stage2(
         graph_path=graph_path,
         output_video=out_dir / "out.mp4",
         output_still=out_dir / "thumb.png",
+        output_webm=out_dir / "out.webm",
+        output_gif=out_dir / "out.gif",
     )
 
     client.create_embed(board_id, render_url)

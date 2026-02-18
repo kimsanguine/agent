@@ -54,6 +54,8 @@ def test_run_poc_uses_channel_and_value_with_loader(mock_load_input_graph, mock_
         graph_path=graph_path,
         output_video=out_dir / "out.mp4",
         output_still=out_dir / "thumb.png",
+        output_webm=out_dir / "out.webm",
+        output_gif=out_dir / "out.gif",
     )
     assert client.embed_calls == [("uXjVTest", "https://cdn.example.com/out.mp4")]
 
