@@ -1,5 +1,7 @@
-import {bundle, renderMedia, renderStill, selectComposition} from '@remotion/renderer';
+import {bundle} from '@remotion/bundler';
+import {renderMedia, renderStill, selectComposition} from '@remotion/renderer';
 import {readFile} from 'node:fs/promises';
+import {pathToFileURL} from 'node:url';
 
 const parseArgs = (argv) => {
   const args = {};
@@ -65,6 +67,6 @@ export const run = async (argv) => {
   });
 };
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   run(process.argv.slice(2));
 }

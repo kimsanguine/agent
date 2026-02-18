@@ -6,8 +6,11 @@ const mockRenderMedia = vi.fn();
 const mockRenderStill = vi.fn();
 const mockReadFile = vi.fn();
 
-vi.mock('@remotion/renderer', () => ({
+vi.mock('@remotion/bundler', () => ({
   bundle: mockBundle,
+}));
+
+vi.mock('@remotion/renderer', () => ({
   selectComposition: mockSelectComposition,
   renderMedia: mockRenderMedia,
   renderStill: mockRenderStill,
