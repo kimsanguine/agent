@@ -3,10 +3,10 @@
 - 기준 문서: `prd.md`
 - 프로젝트: `260214_동적이미지생성도구`
 - 마지막 기술 검증: 2026-02-18
-  - Python test suite: 32 passed
-  - Renderer Vitest: 2 passed
+  - Python test suite: 33 passed
+  - Renderer Vitest: 5 passed (3 files)
   - Renderer build(`tsc --noEmit`): pass
-  - 상세: `docs/plans/2026-02-18-stage2-verification-notes.md`
+  - 상세: `docs/plans/2026-02-18-stage3-verification-notes.md`
 
 ---
 
@@ -28,11 +28,15 @@
   - 최신 검증 노트: `docs/plans/2026-02-18-stage2-verification-notes.md`
 
 ### DoD-3 출력 포맷 MP4/WebM/GIF 제공
-- 상태: 미완료
+- 상태: 완료
 - 현재 근거:
-  - MP4(h264) 렌더 경로: `renderer/render.mjs`
-- 갭:
-  - WebM, GIF 미구현
+  - 다중 포맷 렌더 경로 구현: `renderer/render.mjs` (`codec: h264/webm/gif`)
+  - Python 브리지 선택적 포맷 인자 지원: `src/remotion_bridge.py` (`output_webm`, `output_gif`)
+  - CLI Stage 경로 연결 완료: `src/cli.py` (`run_poc`, `run_stage2`에서 `out.webm`, `out.gif` 전달)
+  - 관련 회귀/계약 테스트:
+    - Python: `tests/test_remotion_bridge.py`, `tests/test_cli_stage2_flow.py`
+    - Renderer: `renderer/tests/render-args.test.ts`, `renderer/tests/render-run.test.ts`
+  - 최신 Stage 3 검증 노트: `docs/plans/2026-02-18-stage3-verification-notes.md`
 
 ### DoD-4 Guardrail(비용/시간/출력/품질) 정책 적용
 - 상태: 미완료
@@ -86,11 +90,18 @@
   - 최신 검증 결과: Python 32 passed / Vitest 2 passed / renderer build pass
   - 검증 노트: `docs/plans/2026-02-18-stage2-verification-notes.md`
 
-### Stage 3 — Output Format Expansion
+### Stage 3 — Output Format Expansion (완료)
 - 범위:
   - MP4 외 WebM/GIF 출력 경로 추가
 - 종료 조건:
   - 동일 입력에 대해 MP4/WebM/GIF 산출 확인
+- 완료 근거:
+  - Stage 3 구현 파일: `renderer/render.mjs`, `src/remotion_bridge.py`, `src/cli.py`
+  - Stage 3 테스트:
+    - Python: `tests/test_remotion_bridge.py`, `tests/test_cli_stage2_flow.py`
+    - Renderer: `renderer/tests/render-args.test.ts`, `renderer/tests/render-run.test.ts`
+  - 최신 검증 결과: Python 33 passed / Vitest 5 passed (3 files) / renderer build pass
+  - 검증 노트: `docs/plans/2026-02-18-stage3-verification-notes.md`
 
 ### Stage 4 — Guardrails & Failure Handling
 - 범위:
