@@ -1,0 +1,14 @@
+# Core runtime
+google-genai>=0.8.0
+PyMuPDF>=1.24.0
+pdfplumber>=0.11.0
+reportlab>=4.2.0
+python-dotenv>=1.0.1
+pydantic>=2.8.0
+tenacity>=8.5.0
+
+# Optional OCR / fallback providers (runtime optional)
+google-cloud-vision>=3.7.0
+azure-ai-documentintelligence>=1.0.0
+pytesseract>=0.3.10
+deepl>=1.18.0
