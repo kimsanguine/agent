@@ -41,7 +41,6 @@ class GeminiTranslateClient:
             model=self.settings.gemini_model,
             contents=prompt,
             config={
-                "response_mime_type": "application/json",
                 "temperature": 0.2,
                 "max_output_tokens": 8192,
             },
@@ -50,15 +49,45 @@ class GeminiTranslateClient:
         if not response.candidates or not response.candidates[0].content:
             raise RuntimeError("Gemini returned empty response")
 
-        raw = response.candidates[0].content.parts[0].text.strip()
-        cleaned = self._clean_json(raw)
-        payload = json.loads(cleaned)
+        if not response.candidates[0].content.parts:
+            raise RuntimeError("Gemini returned empty parts")
 
-        translated = payload.get("translated", "").strip()
+        part_texts = [
+            part.text.strip()
+            for part in response.candidates[0].content.parts
+            if getattr(part, "text", None)
+        ]
+        raw = "\n".join(part_texts).strip()
+        translated = self._extract_translated_text(raw)
         if not translated:
             raise RuntimeError("Gemini response missing translated field")
 
         return translated
+
+    def _extract_translated_text(self, raw_text: str) -> str:
+        cleaned = self._clean_json(raw_text)
+
+        try:
+            payload = json.loads(cleaned)
+            if isinstance(payload, dict):
+                return str(payload.get("translated", "")).strip()
+        except Exception:
+            pass
+
+        match = re.search(
+            r'"translated"\s*:\s*"((?:\\.|[^"\\])*)"',
+            cleaned,
+            flags=re.DOTALL,
+        )
+        if match:
+            value = match.group(1)
+            value = value.replace("\\n", "\n")
+            value = value.replace('\\"', '"')
+            value = value.replace("\\\\", "\\")
+            return value.strip()
+
+        # Fallback: if model returned plain text instead of JSON, accept raw text.
+        return cleaned.strip().strip('"')
 
     def _clean_json(self, text: str) -> str:
         if text.startswith("```"):
@@ -66,6 +95,7 @@ class GeminiTranslateClient:
             text = text.rsplit("```", 1)[0]
             text = text.strip()
 
+        text = text.replace("\r\n", "\n")
         text = re.sub(r",\s*([}\]])", r"\1", text)
         text = re.sub(r"//[^\n]*", "", text)
         return text.strip()
