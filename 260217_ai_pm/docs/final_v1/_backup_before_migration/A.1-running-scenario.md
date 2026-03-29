@@ -133,7 +133,7 @@ Discovery에서 얻은 명확한 인사이트:
 
 ### Claude Code 워크플로우
 
-PM은 먼저 Socratic 대화를 시작합니다 (Part 6.1 기법):
+PM은 먼저 Socratic 대화를 시작합니다 (Part 9.1 기법):
 
 ```
 > @CLAUDE.md @discovery-findings.md

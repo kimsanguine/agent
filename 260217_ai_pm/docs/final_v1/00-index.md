@@ -1,4 +1,4 @@
-# AI 네이티브 PM을 위한 Claude Code 실전 가이드
+# AI PM v1.1 — 하네스 엔지니어링과 함께하는 AI 네이티브 PM 실전 가이드
 
 > **"도구를 배우는 것이 아니라, PM의 일하는 방식을 재설계한다."**
 
@@ -8,117 +8,140 @@
 
 이 가이드는 Claude Code라는 CLI 기반 AI 에이전트를 활용하여, PM이 Discovery → Definition → Delivery → Growth의 전체 제품 개발 사이클에서 어떻게 일하는 방식을 변화시킬 수 있는지를 다룹니다.
 
+v1.1에서는 **하네스 엔지니어링**(Part 0)을 새로 추가하여, 모든 실전 기법의 기초가 되는 PM 하네스 프레임워크를 먼저 다룹니다. Part 2-9의 모든 내용은 이 하네스 위에 구축됩니다.
+
 단순한 도구 사용법이 아닌, **실제 터미널 입력 → Claude 응답 → PM 판단**의 워크스루를 통해 학습합니다.
 
 ### 대상 독자
 
 | 레벨 | 설명 | 권장 경로 |
 | --- | --- | --- |
-| **J (Junior)** | PM 경력 0~2년, AI 도구 경험 적음 | Part 1 → 2 → 4 순서대로 |
-| **P (Practitioner)** | PM 경력 3~7년, AI 도구 일부 사용 중 | Part 1 훑고 → Part 3~6 집중 |
-| **L (Lead)** | PM 경력 7년+, 팀/조직 리딩 | Part 1 훑고 → Part 5~8 집중 |
+| **J (학습자)** | PM 경력 0~2년, AI 도구 경험 적음 | Part 0 하네스 엔지니어링부터 시작 → Part 2-9 순차 학습 |
+| **P (실행자)** | PM 경력 3~7년, AI 도구 일부 사용 중 | Part 0 + Part 7 Delivery 우선 → 필요 시 다른 Part |
+| **L (리더)** | PM 경력 7년+, 팀/조직 리딩 | Part 0 + Part 9 전략 우선 → 팀 확장 시 관련 Part |
 
 ---
 
 ## 목차
 
-### Part 1: 시작하기 — 왜 지금, AI 네이티브 PM인가
+### Part 0: 하네스 엔지니어링 — 모든 PM의 기초 프레임워크
+
+헌법, 작업 구조, 검증, 실행 루프의 4가지 핵심 요소로 구성된 PM 하네스를 이해하고 구현합니다.
+
+- **목적**: AI 에이전트를 PM의 의도대로 동작시키기 위한 하네스(통제 구조)를 설계하고 구축
+- **읽는 이유**: Part 2-9의 모든 실전 기법은 이 하네스 위에 구축됨
+- **학습 시간**: 약 60-90분
+
+| # | 제목 | 핵심 내용 | 난이도 |
+| --- | --- | --- | --- |
+| 0.1 | [01-harness-engineering-guide.md](./01-harness-engineering-guide.md) | 하네스 엔지니어링 종합 가이드: 헌법·작업 구조·검증·실행 루프 | 모든 레벨 |
+
+---
+
+### Part 2: 시작하기 — 왜 지금, AI 네이티브 PM인가
 
 PM의 역할이 어떻게 변하고 있는지, 왜 Claude Code인지, 그리고 첫 설치까지.
 
 | # | 제목 | 핵심 내용 | 난이도 |
 | --- | --- | --- | --- |
-| 1.1 | [1.1-why-now.md](./1.1-why-now.md) | PM 역할 변화, Before/After 시간 배분, 코스 구조 | 모든 레벨 |
-| 1.2 | [1.2-what-is-claude-code.md](./1.2-what-is-claude-code.md) | ChatGPT/Copilot과의 차이, CLI의 4가지 장점 | 모든 레벨 |
-| 1.3 | [1.3-install-and-first-run.md](./1.3-install-and-first-run.md) | 설치 가이드, 첫 대화 예시, 트러블슈팅 | J |
+| 2.1 | [2.1-why-now.md](./2.1-why-now.md) | PM 역할 변화, Before/After 시간 배분, 코스 구조 | 모든 레벨 |
+| 2.2 | [2.2-what-is-claude-code.md](./2.2-what-is-claude-code.md) | ChatGPT/Copilot과의 차이, CLI의 4가지 장점 | 모든 레벨 |
+| 2.3 | [2.3-install-and-first-run.md](./2.3-install-and-first-run.md) | 설치 가이드, 첫 대화 예시, 트러블슈팅 | J |
+| 2.4 | [2.4-code-vs-cowork.md](./2.4-code-vs-cowork.md) | Claude Code vs Cowork 비교, 활용 시나리오 | 모든 레벨 |
 
 ---
 
-### Part 2: 기본기 — Claude Code와 대화하기
+### Part 3: 기본기 — Claude Code와 대화하기
 
 CLI 환경에서 파일을 다루고, 모드를 전환하고, 프로젝트 메모리를 설정하는 실전 기초.
 
 | # | 제목 | 핵심 내용 | 난이도 |
 | --- | --- | --- | --- |
-| 2.1 | [2.1-files-and-input.md](./2.1-files-and-input.md) | @파일 참조, 이미지 입력, 다중 출력 패턴 | J |
-| 2.2 | [2.2-modes-and-depth.md](./2.2-modes-and-depth.md) | Edit/Auto-Accept/Plan 모드, think/ultrathink | J → P |
-| 2.3 | [2.3-project-memory.md](./2.3-project-memory.md) | 메모리 계층 구조, PM 프로젝트용 CLAUDE.md 작성법 | P |
-| 2.4 | [2.4-custom-subagents.md](./2.4-custom-subagents.md) | .claude/agents/ 파일 작성, 엔지니어/경영진/리서처 에이전트 | P → L |
-| 2.5 | [2.5-agent-teams.md](./2.5-agent-teams.md) | 에이전트 팀: 멀티 에이전트 병렬 협업, Delegate 모드, 태스크 의존성 | P → L |
-| 2.6 | [2.6-human-in-the-loop.md](./2.6-human-in-the-loop.md) | Human-in-the-Loop: AI 파트너 철학, 루프 깊이 프레임워크, 가드레일 설계 | 모든 레벨 |
+| 3.1 | [3.1-files-and-input.md](./3.1-files-and-input.md) | @파일 참조, 이미지 입력, 다중 출력 패턴 | J |
+| 3.2 | [3.2-modes-and-depth.md](./3.2-modes-and-depth.md) | Edit/Auto-Accept/Plan 모드, think/ultrathink | J → P |
+| 3.3 | [3.3-project-memory.md](./3.3-project-memory.md) | 메모리 계층 구조, PM 프로젝트용 CLAUDE.md 작성법 | P |
+| 3.4 | [3.4-custom-subagents.md](./3.4-custom-subagents.md) | .claude/agents/ 파일 작성, 엔지니어/경영진/리서처 에이전트 | P → L |
+| 3.5 | [3.5-agent-teams.md](./3.5-agent-teams.md) | 에이전트 팀: 멀티 에이전트 병렬 협업, Delegate 모드, 태스크 의존성 | P → L |
+| 3.6 | [3.6-human-in-the-loop.md](./3.6-human-in-the-loop.md) | Human-in-the-Loop: AI 파트너 철학, 루프 깊이 프레임워크, 가드레일 설계 | 모든 레벨 |
 
 ---
 
-### Part 3: 고급 설정 — 워크플로우 자동화 인프라
+### Part 4: 고급 설정 — 워크플로우 자동화 인프라
 
 Claude Code의 자동화 인프라를 구축하고 고도화하는 심화 설정. MCP 연동, 프로젝트 메모리 심화, 슬래시 커맨드, 커스텀 스킬, 외부 자동화를 다룹니다.
 
 | # | 제목 | 핵심 내용 | 난이도 |
 | --- | --- | --- | --- |
-| 3.1 | [3.1-mcp-integration.md](./3.1-mcp-integration.md) | MCP 연동: Notion/Linear/Slack/GitHub를 하나의 터미널에서 연결 | P → L |
-| 3.2 | [3.2-claude-md-deep-dive.md](./3.2-claude-md-deep-dive.md) | CLAUDE.md 심화: 폴더 구조, YAML front matter, AI Evals, 5축 프레임워크 | P → L |
-| 3.3 | [3.3-slash-commands.md](./3.3-slash-commands.md) | 슬래시 커맨드: /today, /prd, /status 등 PM 반복 워크플로우 자동화 | P → L |
-| 3.4 | [3.4-custom-skills.md](./3.4-custom-skills.md) | 커스텀 스킬: SKILL.md 기반 재사용 워크플로우 패키지 저장·관리·팀 공유 | P → L |
-| 3.5 | [3.5-automation-n8n.md](./3.5-automation-n8n.md) | 외부 자동화: n8n으로 스케줄/이벤트 기반 워크플로우 구축 | P → L |
-| 3.6 | [3.6-multimodel-routing.md](./3.6-multimodel-routing.md) | 멀티모델 라우팅: 태스크별 최적 모델 선택 의사결정 트리, 비용 비교, 실전 코드 | P → L |
+| 4.1 | [4.1-mcp-integration.md](./4.1-mcp-integration.md) | MCP 연동: Notion/Linear/Slack/GitHub를 하나의 터미널에서 연결 | P → L |
+| 4.2 | [4.2-claude-md-deep-dive.md](./4.2-claude-md-deep-dive.md) | CLAUDE.md 심화: 폴더 구조, YAML front matter, AI Evals, 5축 프레임워크 | P → L |
+| 4.3 | [4.3-slash-commands.md](./4.3-slash-commands.md) | 슬래시 커맨드: /today, /prd, /status 등 PM 반복 워크플로우 자동화 | P → L |
+| 4.4 | [4.4-custom-skills.md](./4.4-custom-skills.md) | 커스텀 스킬: SKILL.md 기반 재사용 워크플로우 패키지 저장·관리·팀 공유 | P → L |
+| 4.5 | [4.5-automation-n8n.md](./4.5-automation-n8n.md) | 외부 자동화: n8n으로 스케줄/이벤트 기반 워크플로우 구축 | P → L |
+| 4.6 | [4.6-multimodel-routing.md](./4.6-multimodel-routing.md) | 멀티모델 라우팅: 태스크별 최적 모델 선택 의사결정 트리, 비용 비교, 실전 코드 | P → L |
+| 4.7 | [4.7-automation-team-design.md](./4.7-automation-team-design.md) | 자동화 팀 설계: 에이전트 팀 구성 및 워크플로우 설계 | P → L |
 
 ---
 
-### Part 4: Discovery — 문제 발견
+### Part 5: Discovery — 문제 발견
 
 유저 리서치 데이터 분석과 경쟁사 분석을 Claude Code로 수행하는 실전 워크스루.
 
 | # | 제목 | 핵심 내용 | 난이도 |
 | --- | --- | --- | --- |
-| 4.1 | [4.1-discovery-user-research.md](./4.1-discovery-user-research.md) | CSV/설문 분석, 인터뷰 합성, PM 판단 포인트 | P |
-| 4.2 | [4.2-discovery-competitive-analysis.md](./4.2-discovery-competitive-analysis.md) | 구조화된 분석, 멀티에이전트 병렬 분석, 감성 분석 | P → L |
+| 5.1 | [5.1-discovery-user-research.md](./5.1-discovery-user-research.md) | CSV/설문 분석, 인터뷰 합성, PM 판단 포인트 | P |
+| 5.2 | [5.2-discovery-competitive-analysis.md](./5.2-discovery-competitive-analysis.md) | 구조화된 분석, 멀티에이전트 병렬 분석, 감성 분석 | P → L |
 
 ---
 
-### Part 5: Definition — 해결책 정의
+### Part 6: Definition — 해결책 정의
 
 PRD 작성과 전략 문서 작성을 Claude Code와의 대화를 통해 만들어가는 과정.
 
 | # | 제목 | 핵심 내용 | 난이도 |
 | --- | --- | --- | --- |
-| 5.1 | [5.1-definition-write-prd.md](./5.1-definition-write-prd.md) | 4단계 워크플로우, 반문 기반 대화, 멀티에이전트 리뷰 | P |
-| 5.2 | [5.2-definition-product-strategy.md](./5.2-definition-product-strategy.md) | Diagnosis → Guiding Policy → Coherent Actions | P → L |
+| 6.1 | [6.1-definition-write-prd.md](./6.1-definition-write-prd.md) | 4단계 워크플로우, 반문 기반 대화, 멀티에이전트 리뷰 | P |
+| 6.2 | [6.2-definition-product-strategy.md](./6.2-definition-product-strategy.md) | Diagnosis → Guiding Policy → Coherent Actions | P → L |
 
 ---
 
-### Part 6: Delivery — 직접 만들고 보여주기
+### Part 7: Delivery — 직접 만들고 보여주기
 
 PM이 직접 프로토타입을 만들고, 비주얼 에셋을 생성하고, 배포까지 하는 실전 경험.
 
 | # | 제목 | 핵심 내용 | 난이도 |
 | --- | --- | --- | --- |
-| 6.1 | [6.1-delivery-vibe-coding.md](./6.1-delivery-vibe-coding.md) | 1M Context 시대의 바이브 코딩: SaaS MVP 하루 완성, Agent Teams, 비용 함정 | J → P |
-| 6.2 | [6.2-delivery-visual-assets.md](./6.2-delivery-visual-assets.md) | PM을 위한 5가지 비주얼 에셋 유형, Gemini API 연동 | P |
-| 6.3 | [6.3-delivery-github-deploy.md](./6.3-delivery-github-deploy.md) | PM을 위한 Git 기초, Vercel 배포, 모니터링 | P |
+| 7.1 | [7.1-delivery-vibe-coding.md](./7.1-delivery-vibe-coding.md) | 1M Context 시대의 바이브 코딩: SaaS MVP 하루 완성, Agent Teams, 비용 함정 | J → P |
+| 7.2 | [7.2-delivery-visual-assets.md](./7.2-delivery-visual-assets.md) | PM을 위한 5가지 비주얼 에셋 유형, Gemini API 연동 | P |
+| 7.3 | [7.3-delivery-github-deploy.md](./7.3-delivery-github-deploy.md) | PM을 위한 Git 기초, Vercel 배포, 모니터링 | P |
+| 7.4 | [7.4-office-automation.md](./7.4-office-automation.md) | 오피스 자동화: 문서/스프레드시트/프레젠테이션 자동 생성 | P |
+| 7.5 | [7.5-computer-use.md](./7.5-computer-use.md) | Computer Use: AI 에이전트의 데스크톱 조작 | P → L |
+| 7.6 | [7.6-code-review.md](./7.6-code-review.md) | 코드 리뷰: PM이 알아야 할 코드 리뷰 자동화 | P → L |
 
 ---
 
-### Part 7: Growth — 측정과 운영
+### Part 8: Growth — 측정과 운영
 
 실험 분석, KPI 대시보드, AI 옵저빌리티를 통해 데이터 드리븐 의사결정을 가속화하는 방법.
 
 | # | 제목 | 핵심 내용 | 난이도 |
 | --- | --- | --- | --- |
-| 7.1 | [7.1-growth-experiment-analysis.md](./7.1-growth-experiment-analysis.md) | A/B 테스트 분석, Impact 공식, ROI 시나리오 | P → L |
-| 7.2 | [7.2-growth-kpi-dashboard.md](./7.2-growth-kpi-dashboard.md) | OMTM, KPI 정의 카드, 자동화 스크립트, 알림 체계 | L |
-| 7.3 | [7.3-ai-observability.md](./7.3-ai-observability.md) | AI Observability: Helicone/LangSmith 기반 프로덕션 모니터링 | L |
-| 7.4 | [7.4-1m-context-cost-strategy.md](./7.4-1m-context-cost-strategy.md) | 1M Context 비용 전략: ROI 프레임워크, 시뮬레이션, 최적화 전략 | P → L |
+| 8.1 | [8.1-growth-experiment-analysis.md](./8.1-growth-experiment-analysis.md) | A/B 테스트 분석, Impact 공식, ROI 시나리오 | P → L |
+| 8.2 | [8.2-growth-kpi-dashboard.md](./8.2-growth-kpi-dashboard.md) | OMTM, KPI 정의 카드, 자동화 스크립트, 알림 체계 | L |
+| 8.3 | [8.3-ai-observability.md](./8.3-ai-observability.md) | AI Observability: Helicone/LangSmith 기반 프로덕션 모니터링 | L |
+| 8.4 | [8.4-1m-context-cost-strategy.md](./8.4-1m-context-cost-strategy.md) | 1M Context 비용 전략: ROI 프레임워크, 시뮬레이션, 최적화 전략 | P → L |
+| 8.5 | [8.5-marketplace-strategy.md](./8.5-marketplace-strategy.md) | 마켓플레이스 전략: 플랫폼 비즈니스 모델과 네트워크 효과 | P → L |
 
 ---
 
-### Part 8: 전략과 성장 경로
+### Part 9: 전략과 성장 경로
 
 AI 제품 전략 프레임워크와 AI 네이티브 PM으로 성장하기 위한 로드맵.
 
 | # | 제목 | 핵심 내용 | 난이도 |
 | --- | --- | --- | --- |
-| 8.1 | [8.1-ai-product-strategy.md](./8.1-ai-product-strategy.md) | AI 제품 전략: 4D 프레임워크 (Direction/Differentiation/Design/Deployment) | L |
-| 8.2 | [8.2-growth-path.md](./8.2-growth-path.md) | J/P/L 로드맵, Before/After, 팀 도입 가이드 | 모든 레벨 |
+| 9.1 | [9.1-ai-product-strategy.md](./9.1-ai-product-strategy.md) | AI 제품 전략: 4D 프레임워크 (Direction/Differentiation/Design/Deployment) | L |
+| 9.2 | [9.2-growth-path.md](./9.2-growth-path.md) | J/P/L 로드맵, Before/After, 팀 도입 가이드 | 모든 레벨 |
+| 9.3 | [9.3-cowork-enterprise.md](./9.3-cowork-enterprise.md) | Cowork 엔터프라이즈: 조직 단위 AI 도입 전략 | L |
 
 ---
 
@@ -139,26 +162,45 @@ AI 제품 전략 프레임워크와 AI 네이티브 PM으로 성장하기 위한
 
 ---
 
+## 하네스와 Part 2-9의 관계
+
+Part 0의 하네스 엔지니어링은 이후 모든 Part의 기반입니다. 각 Part에서 하네스의 어떤 요소가 핵심적으로 활용되는지를 아래 표로 정리합니다.
+
+| Part | 핵심 개념 | 하네스 요소 | 연결점 |
+|------|----------|-----------|--------|
+| 2 | Claude Code 기초 | 헌법 | 팀의 일하는 방식 정의, CLAUDE.md로 AI 행동 규범 설정 |
+| 3 | 대화와 메모리 | 헌법 / 작업 구조 | 프로젝트 메모리가 곧 헌법의 구현체, 에이전트 설계가 작업 구조 |
+| 4 | 자동화 인프라 | 검증 / 실행 루프 | MCP·스킬·n8n으로 자동화 루프 구현, CLAUDE.md 심화가 검증 체계 |
+| 5 | Discovery | 검증 | 리서치 데이터의 품질 검증, 멀티에이전트 크로스체크 |
+| 6 | Definition | 작업 구조 | PRD를 구조화된 작업 단위로 분해, 전략 문서의 체계적 구성 |
+| 7 | Delivery | 실행 루프 | 바이브 코딩·배포·리뷰의 반복 실행 사이클 |
+| 8 | Growth | 검증 / 실행 루프 | KPI 측정이 곧 검증, 실험 분석→최적화의 반복 루프 |
+| 9 | 전략과 성장 | 헌법 / 작업 구조 | 조직 전략이 상위 헌법, 성장 경로가 장기 작업 구조 |
+
+---
+
 ## 학습 원칙
 
 1. **입력 → 응답 → 판단**: 모든 모듈은 실제 터미널 세션을 따라갑니다
 2. **PM이 판단하는 지점**: Claude가 할 수 없는 것, PM만이 할 수 있는 것을 명확히 합니다
 3. **Before/After**: 각 모듈에서 PM의 역할이 어떻게 변하는지를 보여줍니다
-4. **점진적 난이도**: Part 1의 설치부터 Part 8의 전략까지 자연스럽게 상승합니다
+4. **점진적 난이도**: Part 0의 하네스부터 Part 9의 전략까지 자연스럽게 상승합니다
+5. **하네스 기반**: 모든 실전 기법은 Part 0의 하네스 프레임워크 위에서 동작합니다
 
 ---
 
 ## 빠른 시작
 
-- **"Claude Code가 뭔지 모르겠어"** → [1.2-what-is-claude-code.md](./1.2-what-is-claude-code.md)
-- **"일단 설치부터 하고 싶어"** → [1.3-install-and-first-run.md](./1.3-install-and-first-run.md)
-- **"MCP로 도구를 연결하고 싶어"** → [3.1-mcp-integration.md](./3.1-mcp-integration.md)
-- **"슬래시 커맨드로 업무를 자동화하고 싶어"** → [3.3-slash-commands.md](./3.3-slash-commands.md)
-- **"자주 쓰는 워크플로우를 저장하고 싶어"** → [3.4-custom-skills.md](./3.4-custom-skills.md)
-- **"PRD 작성에 바로 써보고 싶어"** → [5.1-definition-write-prd.md](./5.1-definition-write-prd.md)
-- **"프로토타입을 직접 만들어보고 싶어"** → [6.1-delivery-vibe-coding.md](./6.1-delivery-vibe-coding.md)
-- **"AI 제품 전략을 체계적으로 세우고 싶어"** → [8.1-ai-product-strategy.md](./8.1-ai-product-strategy.md)
-- **"팀에 도입하는 방법이 궁금해"** → [8.2-growth-path.md](./8.2-growth-path.md)
+- **"하네스 엔지니어링이 뭔지 모르겠어"** → [01-harness-engineering-guide.md](./01-harness-engineering-guide.md)
+- **"Claude Code가 뭔지 모르겠어"** → [2.2-what-is-claude-code.md](./2.2-what-is-claude-code.md)
+- **"일단 설치부터 하고 싶어"** → [2.3-install-and-first-run.md](./2.3-install-and-first-run.md)
+- **"MCP로 도구를 연결하고 싶어"** → [4.1-mcp-integration.md](./4.1-mcp-integration.md)
+- **"슬래시 커맨드로 업무를 자동화하고 싶어"** → [4.3-slash-commands.md](./4.3-slash-commands.md)
+- **"자주 쓰는 워크플로우를 저장하고 싶어"** → [4.4-custom-skills.md](./4.4-custom-skills.md)
+- **"PRD 작성에 바로 써보고 싶어"** → [6.1-definition-write-prd.md](./6.1-definition-write-prd.md)
+- **"프로토타입을 직접 만들어보고 싶어"** → [7.1-delivery-vibe-coding.md](./7.1-delivery-vibe-coding.md)
+- **"AI 제품 전략을 체계적으로 세우고 싶어"** → [9.1-ai-product-strategy.md](./9.1-ai-product-strategy.md)
+- **"팀에 도입하는 방법이 궁금해"** → [9.2-growth-path.md](./9.2-growth-path.md)
 - **"다양한 PM 실전 시나리오를 체험하고 싶어"** → [A.3-usecase-scenarios.md](./A.3-usecase-scenarios.md)
 - **"전체 PM 워크플로우를 한 번에 보고 싶어"** → [A.1-running-scenario.md](./A.1-running-scenario.md)
 - **"CLAUDE.md를 바로 세팅하고 싶어"** → [CLAUDE-md-starter.md](./templates/CLAUDE-md-starter.md) 복사 후 커스터마이징
