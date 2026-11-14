@@ -159,7 +159,7 @@
 > **🛠 실습**
 > 지금 쓰는 에이전트와 MCP 서버를 하나 골라 위 표를 채워 보라. 세 칸이 모두 "예"라면 가장 쉽게 끊을 고리는 무엇인가?
 
-출처: General Analysis 연구 및 Simon Willison 블로그(2025.7.6). 원문 세부 표현은 확인 필요.
+출처: General Analysis 연구를 다룬 Simon Willison 블로그(2025.7.6)와 다수 2차 보도로 교차 확인. General Analysis 원문은 직접 열람하지 못함.
 
 <!--page-->
 

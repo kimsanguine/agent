@@ -220,6 +220,7 @@
 1. 쉘 명령만 감싼다. 파일 도구, WebFetch, MCP 서버, 훅은 밖에서 실행된다.
 2. 기본 읽기 정책은 `~/.ssh` 같은 자격증명 파일을 막지 않으므로 직접 deny한다.
 3. `allowUnsandboxedCommands`를 `false`로 하지 않으면 실패한 명령을 샌드박스 밖에서 재시도할 수 있다.
+4. `allowedDomains`는 "미리 허용"이지 차단 목록이 아니다. 미등록 도메인은 모드에 따라 묻거나(Manual·`acceptEdits`), `bypassPermissions`에서는 그대로 허용된다. 항상 거부하려면 `strictAllowlist` 같은 엄격 옵션이 필요하다(공식 sandboxing 문서 기준, 사용 전 재확인).
 
 **훅.** `PreToolUse` 훅은 도구 실행 전에 스크립트를 돌려 stdin의 JSON(`tool_name`, `tool_input`)을 검사한다. 종료 코드 2면 호출이 차단되고 stderr가 Claude에게 전달된다.
 
